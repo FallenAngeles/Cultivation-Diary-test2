@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+
+    android:id="@+id/main"
+    android:background="#1f1f1f"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/DateDiary"
+        android:text="19 Октября 2025"
+        android:textSize="32sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:padding="14dp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="160dp"
+        android:maxHeight="400dp"
+        android:id="@+id/EditThoughts"
+        android:textColor="@color/white"
+        android:background="@color/LightGray"
+        android:padding="10dp"
+        android:layout_margin="8dp"
+        android:hint="@string/diarytext"
+        android:gravity="top|start"
+        android:textColorHint="@color/LightGray"
+        android:inputType="textMultiLine"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/TagsDiary"
+        android:text="Тэги"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:padding="12dp"/>
+
+</LinearLayout>
