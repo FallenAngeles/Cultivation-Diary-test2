@@ -42,6 +42,8 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     // Остальные зависимости
+    implementation libs.fab.options
+    implementation libs.support.design
     implementation libs.androidx.core.ktx
     implementation libs.androidx.appcompat
     implementation libs.material

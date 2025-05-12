@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/Calendar"
+        android:title="Календарь"
+        android:icon="@drawable/calendar"/>
+
+    <item
+        android:id="@+id/Project"
+        android:title="Проекты"
+        android:icon="@drawable/project"/>
+
+    <item
+        android:id="@+id/Null"
+        android:title=""
+        android:enabled="false"/>
+
+    <item
+        android:id="@+id/Activity"
+        android:title="Активность"
+        android:icon="@drawable/clock"/>
+
+    <item
+        android:id="@+id/Other"
+        android:title="В разработке"
+        android:icon="@drawable/clock"/>
+
+</menu>

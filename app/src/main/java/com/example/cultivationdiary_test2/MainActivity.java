@@ -4,21 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cultivationdiary_test2.Adapter.CalendarAdapter;
-import com.example.cultivationdiary_test2.Adapter.GridSpacingItemDecoration;
-import com.example.cultivationdiary_test2.Adapter.ViewDay;
+import com.example.cultivationdiary_test2.Adapter.Caledar.CalendarAdapter;
+import com.example.cultivationdiary_test2.Adapter.Caledar.GridSpacingItemDecoration;
+import com.example.cultivationdiary_test2.Adapter.Caledar.ViewDay;
 import com.example.cultivationdiary_test2.Data.Database.Diary;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -156,4 +153,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         startActivity(intent);
     }
 
+    /*@Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
+    }*/
 }
