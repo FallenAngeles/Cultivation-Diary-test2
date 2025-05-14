@@ -1,4 +1,4 @@
-package com.example.cultivationdiary_test2.Data.Database;
+package com.example.cultivationdiary_test2.Data.Database.Diary;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Diary {
 
     @PrimaryKey(autoGenerate = true)
-    public int Diary_id;
+    public int diary_id;
     public String text;
     public String CreateDate;
 
@@ -16,11 +16,11 @@ public class Diary {
         this.CreateDate = CreateDate;
     }
 
-    public int getDiary_id() {return Diary_id;}
-    public void setDiary_id(int newId) {this.Diary_id = newId;}
+    public int getDiary_id() {return diary_id;}
+    public void setDiary_id(int newId) {this.diary_id = newId;}
     public String getText() {return text;}
     public void setText(String newText) {this.text = newText;}
-    public String getDate() {return CreateDate;}
+    public String getCreateDate() {return CreateDate;}
     public void setDate(String newDate) {this.CreateDate = newDate;}
 
 }

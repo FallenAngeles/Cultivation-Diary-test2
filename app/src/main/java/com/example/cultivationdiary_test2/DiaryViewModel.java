@@ -6,8 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.cultivationdiary_test2.Data.Database.Diary;
-import com.example.cultivationdiary_test2.Data.Repository;
+import com.example.cultivationdiary_test2.Data.Database.Diary.Diary;
+import com.example.cultivationdiary_test2.Data.Database.Diary.Repository;
 
 import java.util.List;
 
