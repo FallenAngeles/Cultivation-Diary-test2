@@ -1,5 +1,6 @@
 package com.example.cultivationdiary_test2.Adapter.Caledar;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cultivationdiary_test2.DiaryActivity;
 import com.example.cultivationdiary_test2.R;
 
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -35,6 +37,8 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
     public void onClick(@NonNull View view)
     {
         String fulldate = (String) view.getTag();
-        onItemListener.onItemClick(getAdapterPosition(), (String) dayOfMonth.getText(), fulldate);
+        Intent intent = new Intent(view.getContext(), DiaryActivity.class);
+        intent.putExtra("SELECTED_DATE", fulldate);
+        view.getContext().startActivity(intent);
     }
 }

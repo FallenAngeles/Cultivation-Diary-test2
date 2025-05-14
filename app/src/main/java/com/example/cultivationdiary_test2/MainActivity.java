@@ -1,160 +1,46 @@
 package com.example.cultivationdiary_test2;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.cultivationdiary_test2.Adapter.Caledar.CalendarAdapter;
-import com.example.cultivationdiary_test2.Adapter.Caledar.GridSpacingItemDecoration;
-import com.example.cultivationdiary_test2.Adapter.Caledar.ViewDay;
-import com.example.cultivationdiary_test2.Data.Database.Diary;
+import com.example.cultivationdiary_test2.databinding.ActivityMainBinding;
 
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.format.TextStyle;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+public class MainActivity extends AppCompatActivity{
 
-public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
-
-    private DiaryViewModel diaryViewModel;
-    private ArrayList<ViewDay> dayInMonthArray;
-    private TextView monthYearText;
-    private RecyclerView calendarRecyclerView;
-    private LocalDate selectedDate;
-    private List<Diary> currentMonthDiaries = new ArrayList<>();
-    private Observer<List<Diary>> diariesObserver = diaries -> {
-        currentMonthDiaries = diaries;
-        setMonthView();
-    };
+    ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initWidgets();
-        selectedDate = LocalDate.now();
-        setMonthView();
-    }
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-    private void initWidgets()
-    {
-        calendarRecyclerView = findViewById(R.id.RecyclerCalendar);
-        monthYearText = findViewById(R.id.monthYearTV);
-        calendarRecyclerView.addItemDecoration(new GridSpacingItemDecoration(12, 7));
-    }
+        replaceFragment(new CalendarFragment());
+        binding.BottomAppBarNavigation.setBackground(null);
+        binding.BottomAppBarNavigation.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
 
-    private void setMonthView() {
-        monthYearText.setText(MonthFromDate(selectedDate));
-        ArrayList<ViewDay> daysInMonth = daysInMonthArray(selectedDate, currentMonthDiaries);
-        CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
-        calendarRecyclerView.setLayoutManager(layoutManager);
-
-        calendarRecyclerView.setAdapter(calendarAdapter);
-    }
-
-    @NonNull
-    private ArrayList<ViewDay> daysInMonthArray(LocalDate date, List<Diary> diaries) {
-        ArrayList<ViewDay> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-        int daysInMonth = yearMonth.lengthOfMonth();
-        LocalDate LastMonth = selectedDate.minusMonths(1);
-        LocalDate NextMonth = selectedDate.plusMonths(1);
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        LocalDate firstOfNextMonth = NextMonth.withDayOfMonth(1);
-        LocalDate endOfMonth = LastMonth.withDayOfMonth(LastMonth.lengthOfMonth());
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-        DateTimeFormatter fullDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("d");
-
-        for(int i = 1; i <= 42; i++)
-        {
-            if(i < dayOfWeek)
-            {
-                int dayNumber = i - dayOfWeek + 1;
-                LocalDate currentDay = endOfMonth.plusDays(dayNumber);
-                String dayOfWeekName = currentDay.getDayOfWeek().getDisplayName(TextStyle.SHORT,
-                        Locale.getDefault());
-                String fullDate = currentDay.format(fullDateFormatter);
-                daysInMonthArray.add(new ViewDay(String.valueOf(currentDay.format(format)),
-                        MonthFromDate(LastMonth), dayOfWeekName, (float) 0.3, fullDate));
+            if (itemId == R.id.Calendar) {
+                replaceFragment(new CalendarFragment());
+            } else if (itemId == R.id.Project) {
+                replaceFragment(new ProjectsFragment());
+            } else if (itemId == R.id.Activity) {
+                replaceFragment(new ActivityFragment());
             }
-            else if (i > daysInMonth + dayOfWeek - 1) {
 
-                LocalDate currentDay = firstOfNextMonth.plusDays(i - dayOfWeek
-                        - firstOfMonth.lengthOfMonth());
-                String fullDate = currentDay.format(fullDateFormatter);
-                String dayOfWeekName = currentDay.getDayOfWeek().getDisplayName(TextStyle.SHORT,
-                        Locale.getDefault());
-                daysInMonthArray.add(new ViewDay(String.valueOf(currentDay.format(format)),
-                        MonthFromDate(NextMonth), dayOfWeekName, (float) 0.3, fullDate));
-            }
-            else
-            {
-                int dayNumber = i - dayOfWeek + 1;
-                LocalDate currentDay = firstOfMonth.plusDays(dayNumber - 1);
-                String dayOfWeekName = currentDay.getDayOfWeek().getDisplayName(TextStyle.SHORT,
-                        Locale.getDefault());
-                String fullDate = currentDay.format(fullDateFormatter);
-                daysInMonthArray.add(new ViewDay(String.valueOf(dayNumber),
-                        MonthFromDate(selectedDate), dayOfWeekName, (float) 1.0, fullDate));
-            }
-        }
-        for (ViewDay day : daysInMonthArray) {
-            boolean hasDiary = diaries.stream().anyMatch(d -> d.getDate().equals(day.getFullDate()));
-            day.setHasDiary(hasDiary);
-        }
-        return  daysInMonthArray;
+            return true;
+        });
+
     }
 
-    private void updateDiariesObservation() {
-        String monthYear = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM"));
-        diaryViewModel.getDiaryByMonth(monthYear).observe(this, diariesObserver);
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.FrameLayout, fragment);
+        fragmentTransaction.commit();
     }
-
-    private String MonthFromDate(@NonNull LocalDate date)
-    {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM");
-        return date.format(formatter);
-    }
-
-    public void previousMonthAction(View view)
-    {
-        selectedDate = selectedDate.minusMonths(1);
-        setMonthView();
-    }
-
-    public void nextMonthAction(View view)
-    {
-        selectedDate = selectedDate.plusMonths(1);
-        setMonthView();
-    }
-
-    private String YearFromDate(@NonNull LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-        return date.format(formatter);
-    }
-
-    @Override
-    public void onItemClick(int position, @NonNull String dayText, String fullDate)
-    {
-        Intent intent = new Intent(this, DiaryActivity.class);
-        intent.putExtra("SELECTED_DATE", fullDate);
-        startActivity(intent);
-    }
-
-    /*@Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
-    }*/
 }

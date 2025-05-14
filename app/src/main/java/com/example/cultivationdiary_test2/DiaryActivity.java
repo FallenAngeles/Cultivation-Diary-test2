@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.cultivationdiary_test2.Data.Database.Diary;
+import com.example.cultivationdiary_test2.Data.Database.Diary.Diary;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

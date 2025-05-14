@@ -1,6 +1,4 @@
-package com.example.cultivationdiary_test2.Data.Database;
-
-import android.util.Log;
+package com.example.cultivationdiary_test2.Data.Database.Diary;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
@@ -29,9 +27,6 @@ public interface DiaryDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Diary diary);
-
-    /*@Insert
-    void insert(Diary diary);*/
 
     @Update
     void update(Diary diary);
