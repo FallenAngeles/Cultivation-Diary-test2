@@ -3,7 +3,6 @@ package com.example.cultivationdiary_test2.Adapter.Project;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,12 +31,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProjectViewHolder holder, int i) {
-        Project project = projects.get(i);
+    public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
+        Project project = projects.get(position);
         holder.NameProject.setText(project.getName_project());
         holder.Description.setText(project.getProject_description());
-        Drawable icon = holder.itemView.getContext().getResources().getDrawable(project.getIcon());
-        holder.Icon.setImageDrawable(icon);
+        holder.bind(project);
+        //Drawable icon = ContextCompat.getDrawable(holder.itemView.getContext(), project.getIcon());
+        //holder.Icon.setImageDrawable(icon);
 
     }
 
@@ -48,7 +48,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectViewHolder> {
 
     public interface OnItemListener
     {
-        void onItemClick(int i, String nameProject, String description);
+        void onItemClick(Project project);
     }
 
 }

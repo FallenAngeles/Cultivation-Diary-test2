@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cultivationdiary_test2.DiaryActivity;
+import com.example.cultivationdiary_test2.Adds.DiaryActivity;
 import com.example.cultivationdiary_test2.R;
 
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener
@@ -19,6 +19,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
     public final TextView dayOfWeek;
     public final ConstraintLayout DayLayout;
     public final ImageView iconDiary;
+    public final ImageView iconEvent;
     private final CalendarAdapter.OnItemListener onItemListener;
 
     public CalendarViewHolder(@NonNull View itemView, CalendarAdapter.OnItemListener onItemListener)
@@ -29,6 +30,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
         dayOfWeek = itemView.findViewById(R.id.DayOfWeek);
         DayLayout = itemView.findViewById(R.id.DayLayout);
         iconDiary = itemView.findViewById(R.id.DiaryIcon);
+        iconEvent = itemView.findViewById(R.id.EventIcon);
         this.onItemListener = onItemListener;
         itemView.setOnClickListener(this);
     }

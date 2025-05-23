@@ -1,4 +1,4 @@
-package com.example.cultivationdiary_test2;
+package com.example.cultivationdiary_test2.Fragments;
 
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +20,11 @@ import com.example.cultivationdiary_test2.Adapter.Caledar.CalendarAdapter;
 import com.example.cultivationdiary_test2.Adapter.Caledar.GridSpacingItemDecoration;
 import com.example.cultivationdiary_test2.Adapter.Caledar.ViewDay;
 import com.example.cultivationdiary_test2.Data.Database.Diary.Diary;
+import com.example.cultivationdiary_test2.Data.Database.Event.Event;
+import com.example.cultivationdiary_test2.Data.Database.Event.Repository;
+import com.example.cultivationdiary_test2.R;
+import com.example.cultivationdiary_test2.ViewModel.DiaryViewModel;
+import com.example.cultivationdiary_test2.ViewModel.EventViewModel;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -33,6 +37,7 @@ import java.util.Locale;
 public class CalendarFragment extends Fragment implements CalendarAdapter.OnItemListener {
 
     private DiaryViewModel diaryViewModel;
+    private EventViewModel eventViewModel;
     private ArrayList<ViewDay> dayInMonthArray;
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
@@ -42,12 +47,18 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         currentMonthDiaries = diaries;
         setMonthView();
     };
+    private List<Event> currentMonthEvents = new ArrayList<>();
+    private Observer<List<Event>> eventsObserver = events -> {
+        currentMonthEvents = events;
+        setMonthView();
+    };
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         diaryViewModel = new ViewModelProvider(this).get(DiaryViewModel.class);
+        eventViewModel = new ViewModelProvider(this).get(EventViewModel.class);
         View view;
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
 
@@ -125,12 +136,17 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
             boolean hasDiary = diaries.stream().anyMatch(d -> d.getCreateDate().equals(day.getFullDate()));
             day.setHasDiary(hasDiary);
         }
+        for (ViewDay day : daysInMonthArray) {
+            boolean hasEvent = currentMonthEvents.stream().anyMatch(e -> e.getDate().equals(day.getFullDate()));
+            day.setHasEvent(hasEvent);
+        }
         return  daysInMonthArray;
     }
 
     private void updateDiariesObservation() {
         String monthYear = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM"));
         diaryViewModel.getDiaryByMonth(monthYear).observe(getViewLifecycleOwner(), diariesObserver);
+        eventViewModel.getEventByMonth(monthYear).observe(getViewLifecycleOwner(), eventsObserver);
     }
 
     private String MonthFromDate(@NonNull LocalDate date)

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.cultivationdiary_test2.Data.Database.AppDatabase;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -31,6 +32,10 @@ public class Repository {
 
     public LiveData<Project> getProject(int id) {
         return Dao.getById(id);
+    }
+
+    public LiveData<List<Project>> getAllProject() {
+        return Dao.getAll();
     }
 
 }

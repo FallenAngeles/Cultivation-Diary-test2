@@ -8,6 +8,19 @@
     android:background="#1f1f1f"
     tools:context=".MainActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/beige"
+        app:title="Ciltivation Diary"
+        app:titleTextColor="@color/white"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,9 +40,7 @@
                 android:id="@+id/BottomAppBarNavigation"
                 android:layout_marginEnd="20dp"
                 app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_menu">
-
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
+                app:menu="@menu/bottom_menu"/>
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 

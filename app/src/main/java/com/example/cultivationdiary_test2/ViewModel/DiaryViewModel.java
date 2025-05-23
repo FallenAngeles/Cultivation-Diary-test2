@@ -1,4 +1,4 @@
-package com.example.cultivationdiary_test2;
+package com.example.cultivationdiary_test2.ViewModel;
 
 import android.app.Application;
 

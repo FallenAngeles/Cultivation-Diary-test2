@@ -12,7 +12,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CultivationDiary_test2"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Adds.CreateEvent"
+            android:exported="false" />
+        <activity
+            android:name=".EventsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Adds.CreateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Adds.ProjectListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Adds.CreateProjectActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -22,7 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.cultivationdiary_test2.DiaryActivity" />
+        <activity android:name=".Adds.DiaryActivity" />
     </application>
 
 </manifest>
