@@ -10,6 +10,7 @@ public class ViewDay implements Serializable {
     private Float Alpha;
     private String fullDate;
     private boolean hasDiary = false;
+    private boolean hasEvent = false;
 
     public ViewDay(String Day, String Month, String DayOfWeek, Float Alpha, String fullDate) {
         this.Day = Day;
@@ -21,14 +22,22 @@ public class ViewDay implements Serializable {
 
     public String getDay() {return this.Day;}
     public void setDay(String NewDay) {this.Day = NewDay;}
+
     public String getMonth() {return this.Month;}
     public void  setMonth(String NewMonth) {this.Month = NewMonth;}
+
     public String getDayOfWeek() {return this.DayOfWeek;}
     public void setDayOfWeek(String NewDayOfWeek) {this.DayOfWeek = NewDayOfWeek;}
+
     public Float getAlpha() {return this.Alpha;}
     public void setAlpha(Float NewAlpha) {this.Alpha = NewAlpha;}
+
     public boolean getHasDiary() {return hasDiary;}
     public void setHasDiary(boolean hasDiary) {this.hasDiary = hasDiary;}
+
+    public boolean getHasEvent() {return hasEvent;}
+    public void setHasEvent(boolean hasEvent) {this.hasEvent = hasEvent;}
+
     public String getFullDate() {return fullDate;}
     public void setFullDate(String fullDate) {this.fullDate = fullDate;}
 }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".Adds.CreateActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#1f1f1f"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/addEventName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:hint="Название Мероприятия"
+            android:layout_marginTop="30dp"
+            android:minLines="3"/>
+
+        <DatePicker
+            android:id="@+id/addEventStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:theme="@style/WhiteSpinnerDatePicker"
+            android:calendarTextColor="@color/white"
+            android:calendarViewShown="false"/>
+
+        <TimePicker
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/EventTime"/>
+
+        <Button
+            android:id="@+id/buttonSaveEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Сохранить проект"/>
+
+    </LinearLayout>
+</ScrollView>

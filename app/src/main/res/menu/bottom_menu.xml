@@ -12,18 +12,8 @@
         android:icon="@drawable/project"/>
 
     <item
-        android:id="@+id/Null"
-        android:title=""
-        android:enabled="false"/>
-
-    <item
         android:id="@+id/Activity"
         android:title="Активность"
-        android:icon="@drawable/clock"/>
-
-    <item
-        android:id="@+id/Other"
-        android:title="В разработке"
         android:icon="@drawable/clock"/>
 
 </menu>

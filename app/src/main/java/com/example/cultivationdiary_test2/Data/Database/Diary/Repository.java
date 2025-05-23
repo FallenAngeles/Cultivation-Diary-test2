@@ -1,12 +1,10 @@
-package com.example.cultivationdiary_test2.Data;
+package com.example.cultivationdiary_test2.Data.Database.Diary;
 
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
 import com.example.cultivationdiary_test2.Data.Database.AppDatabase;
-import com.example.cultivationdiary_test2.Data.Database.Diary;
-import com.example.cultivationdiary_test2.Data.Database.DiaryDao;
 
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -17,7 +15,7 @@ public class Repository {
     private final Executor executor = Executors.newSingleThreadExecutor();
 
     public Repository(Context context) {
-        Dao = AppDatabase.getDatabase(context).diaryDao();
+        Dao = AppDatabase.getInstance(context).diaryDao();
     }
 
     public LiveData<List<Diary>> DiaryByMonth(String monthYear) {
