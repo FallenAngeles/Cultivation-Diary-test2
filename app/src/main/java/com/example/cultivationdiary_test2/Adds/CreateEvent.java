@@ -10,25 +10,28 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultivationdiary_test2.Data.Database.Event.Event;
-import com.example.cultivationdiary_test2.Data.Database.Event.Repository;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.Reminders;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.RepositoryRemind;
 import com.example.cultivationdiary_test2.R;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class CreateEvent extends AppCompatActivity {
 
     private EditText nameEvent;
     private LocalDate startdate;
     private LocalTime starttime;
-    private Repository repository;
+    private RepositoryRemind repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_event);
 
-        repository = new Repository(getApplicationContext());
+        repository = new RepositoryRemind(getApplicationContext());
         nameEvent = findViewById(R.id.addEventName);
 
         DatePicker startDate = findViewById(R.id.addEventStart);
@@ -61,19 +64,20 @@ public class CreateEvent extends AppCompatActivity {
         if (startdate == null) {
             startdate = LocalDate.now();}
 
-        String DateTime = startdate + " " + starttime;
         String name = nameEvent.getText().toString().trim();
-
         if (name.isEmpty()) {
             nameEvent.setError("Введите название");
             return;}
 
-        Log.e("Events date", name);
-        Log.e("Events date", DateTime);
+        LocalDateTime eventDateTime = LocalDateTime.of(startdate, starttime);
+        String DateTime = eventDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+
+        String remindDateTime = eventDateTime.minusMinutes(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        String remindName = "Мероприятие " + name;
 
         Event event = new Event(name, DateTime, startdate.toString());
-        repository.saveEvent(event);
+        Reminders reminder = new Reminders(remindName, remindDateTime);
+        repository.saveEventWithRemind(event, reminder);
         finish();
     }
-
 }

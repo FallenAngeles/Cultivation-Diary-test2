@@ -17,13 +17,12 @@ public interface RemindersDAO {
     LiveData<List<Reminders>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Reminders reminders);
+    long insert(Reminders reminders);
 
     @Update
     void update(Reminders reminders);
 
     @Delete
     void delete(Reminders reminders);
-
 
 }

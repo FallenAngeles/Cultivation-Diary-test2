@@ -17,7 +17,7 @@ public interface ActivityDAO {
     LiveData<List<Activity>> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Activity activity);
+    long insert(Activity activity);
 
     @Update
     void update(Activity activity);

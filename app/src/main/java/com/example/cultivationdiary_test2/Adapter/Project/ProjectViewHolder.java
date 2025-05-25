@@ -32,7 +32,6 @@ public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.O
 
     public void bind(@NonNull Project project) {
         projectId = project.getId_project(); // Сохраняем ID проекта
-        NameProject.setText(project.getName_project());
     }
 
     @Override

@@ -33,13 +33,4 @@
         android:textColorHint="@color/LightGray"
         android:inputType="textMultiLine"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/TagsDiary"
-        android:text="Тэги"
-        android:textColor="@color/white"
-        android:textSize="24sp"
-        android:padding="12dp"/>
-
 </LinearLayout>

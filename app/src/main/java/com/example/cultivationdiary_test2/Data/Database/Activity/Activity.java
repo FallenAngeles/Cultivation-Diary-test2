@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Activity {
 
     @PrimaryKey(autoGenerate = true)
-    public int id_activity;
+    public long id_activity;
     public String name_activity;
     public int duration;
     public String stard_datetime;

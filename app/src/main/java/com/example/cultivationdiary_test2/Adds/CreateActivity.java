@@ -11,10 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cultivationdiary_test2.Data.Database.Activity.Activity;
 import com.example.cultivationdiary_test2.Data.Database.Activity.Repository;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.Reminders;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.RepositoryRemind;
 import com.example.cultivationdiary_test2.R;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -22,14 +26,14 @@ public class CreateActivity extends AppCompatActivity {
     private LocalDate StartDate;
     private LocalTime StartTime;
     private LocalTime EndTime;
-    private Repository repository;
+    private RepositoryRemind repository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        repository = new Repository(getApplicationContext());
+        repository = new RepositoryRemind(getApplicationContext());
         nameActivity = findViewById(R.id.addActivityName);
 
         DatePicker startActivity = findViewById(R.id.addActivityStart);
@@ -77,21 +81,22 @@ public class CreateActivity extends AppCompatActivity {
             StartDate = LocalDate.now();
         }
 
-        String StartDateTime = StartDate + " " + StartTime;
+        LocalDateTime StartDateTime = LocalDateTime.of(StartDate, StartTime);
         String EndDateTime;
+
         if (StartTime.isAfter(EndTime) || StartTime == EndTime) {
             StartDate = StartDate.plusDays(1);
-            Log.e("Activity Date", String.valueOf(StartDate));
             EndDateTime = StartDate + " " + EndTime;
-            Log.e("Activity Date", "if " + EndDateTime);
         } else {
             EndDateTime = StartDate + " " + EndTime;
-            Log.e("Activity Date", "else " + EndDateTime);
         }
-        Log.e("Activity Date", StartDateTime);
-        Activity activity = new Activity(name, StartDateTime, EndDateTime);
-        Log.e("Activity Date", String.valueOf(activity));
-        repository.saveActivity(activity);
+
+        String remindDateTime = StartDateTime.minusMinutes(15).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        String remindName = "Активность " + name;
+
+        Activity activity = new Activity(name, StartDateTime.toString(), EndDateTime);
+        Reminders reminders = new Reminders(remindName, remindDateTime);
+        repository.saveActivityWithRemind(activity, reminders);
         finish();
     }
 }

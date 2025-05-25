@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Reminders {
 
     @PrimaryKey(autoGenerate = true)
-    public int id_rmd;
+    public long id_rmd;
     public String name_rmd;
     public String Datetime_rmd;
 
@@ -15,6 +15,9 @@ public class Reminders {
         this.name_rmd = name_rmd;
         this.Datetime_rmd = Datetime_rmd;
     }
+
+    public long getId_rmd() {return id_rmd;}
+    public void setId_rmd(long newId) {this.id_rmd = newId;}
 
     public String getName_rmd() {return name_rmd;}
     public void setName_rmd(String newId) {this.name_rmd = newId;}

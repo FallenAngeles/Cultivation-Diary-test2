@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 public class Event {
 
     @PrimaryKey(autoGenerate = true)
-    public int id_event;
+    public long id_event;
     public String name_event;
     public String Date;
     public String Start_datetime;

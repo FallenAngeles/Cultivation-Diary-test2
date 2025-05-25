@@ -62,10 +62,12 @@ public class DiaryActivity extends AppCompatActivity {
             currentDiary.setText(text);
             diaryViewModel.updateData(currentDiary);
             Log.e("Diary", "Update");
+            Log.e("Diary", selectedDate);
         } else {
             Diary diary = new Diary(text, selectedDate);
             diaryViewModel.saveData(diary);
             Log.e("Diary", "Save");
+            Log.e("Diary", selectedDate);
         }
     }
 }

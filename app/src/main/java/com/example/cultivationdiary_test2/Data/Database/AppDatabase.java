@@ -14,12 +14,17 @@ import com.example.cultivationdiary_test2.Data.Database.Event.Event;
 import com.example.cultivationdiary_test2.Data.Database.Event.EventDAO;
 import com.example.cultivationdiary_test2.Data.Database.Project.Project;
 import com.example.cultivationdiary_test2.Data.Database.Project.ProjectDAO;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderActivities;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderActivityDAO;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderEvents;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderEventsDAO;
 import com.example.cultivationdiary_test2.Data.Database.Reminders.Reminders;
 import com.example.cultivationdiary_test2.Data.Database.Reminders.RemindersDAO;
 import com.example.cultivationdiary_test2.Data.Database.Task.Task;
 import com.example.cultivationdiary_test2.Data.Database.Task.TaskDAO;
 
-@Database(entities = {Diary.class, Project.class, Task.class, Activity.class, Event.class, Reminders.class}, version = 16)
+@Database(entities = {Diary.class, Project.class, Task.class, Activity.class, Event.class,
+        Reminders.class, ReminderEvents.class, ReminderActivities.class}, version = 18)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract DiaryDao diaryDao();
     public abstract ProjectDAO projectDAO();
@@ -27,6 +32,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract ActivityDAO activityDAO();
     public abstract EventDAO eventDAO();
     public abstract RemindersDAO remindersDAO();
+    public abstract ReminderEventsDAO reminderEventsDAO();
+    public abstract ReminderActivityDAO reminderActivityDAO();
 
     private static volatile AppDatabase INSTANCE;
 

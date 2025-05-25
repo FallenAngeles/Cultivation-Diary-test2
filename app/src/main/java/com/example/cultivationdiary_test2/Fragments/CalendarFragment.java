@@ -1,9 +1,12 @@
 package com.example.cultivationdiary_test2.Fragments;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.cultivationdiary_test2.Adapter.Caledar.CalendarAdapter;
@@ -25,9 +30,14 @@ import com.example.cultivationdiary_test2.Data.Database.Event.Repository;
 import com.example.cultivationdiary_test2.R;
 import com.example.cultivationdiary_test2.ViewModel.DiaryViewModel;
 import com.example.cultivationdiary_test2.ViewModel.EventViewModel;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
@@ -71,7 +81,8 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         calendarRecyclerView.addItemDecoration(new GridSpacingItemDecoration(12, 7));
         updateDiariesObservation();
 
-        setMonthView();
+        monthYearText.setOnClickListener(v -> showMonthPicker());
+        //setMonthView();
         return view;
     }
 
@@ -134,9 +145,10 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         }
         for (ViewDay day : daysInMonthArray) {
             boolean hasDiary = diaries.stream().anyMatch(d -> d.getCreateDate().equals(day.getFullDate()));
+            if (hasDiary) {
+                Log.e("Icons", day.getDay());
+            }
             day.setHasDiary(hasDiary);
-        }
-        for (ViewDay day : daysInMonthArray) {
             boolean hasEvent = currentMonthEvents.stream().anyMatch(e -> e.getDate().equals(day.getFullDate()));
             day.setHasEvent(hasEvent);
         }
@@ -167,9 +179,54 @@ public class CalendarFragment extends Fragment implements CalendarAdapter.OnItem
         setMonthView();
     }
 
-    private String YearFromDate(@NonNull LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy");
-        return date.format(formatter);
+    public void showMonthPicker() {
+        // Создаем кастомное View для диалога
+        LayoutInflater inflater = LayoutInflater.from(requireContext());
+        View dialogView = inflater.inflate(R.layout.month_year_picker, null);
+
+        // Инициализируем Spinner
+        Spinner monthSpinner = dialogView.findViewById(R.id.month_spinner);
+        Spinner yearSpinner = dialogView.findViewById(R.id.year_spinner);
+
+        // Настройка месяцев
+        ArrayAdapter<CharSequence> monthAdapter = ArrayAdapter.createFromResource(
+                requireContext(),
+                R.array.months_array,
+                android.R.layout.simple_spinner_item
+        );
+        monthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        monthSpinner.setAdapter(monthAdapter);
+        monthSpinner.setSelection(selectedDate.getMonthValue() - 1);
+
+        List<Integer> years = new ArrayList<>();
+        int currentYear = Year.now().getValue();
+        for (int i = currentYear - 5; i <= currentYear + 5; i++) {
+            years.add(i);
+        }
+
+        ArrayAdapter<Integer> yearAdapter = new ArrayAdapter<>(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                years
+        );
+        yearAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearSpinner.setAdapter(yearAdapter);
+        yearSpinner.setSelection(years.indexOf(selectedDate.getYear()));
+
+        AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                .setView(dialogView)
+                .setPositiveButton("OK", (d, which) -> {
+                    int selectedYear = (int) yearSpinner.getSelectedItem();
+                    int selectedMonth = monthSpinner.getSelectedItemPosition() + 1;
+
+                    selectedDate = LocalDate.of(selectedYear, selectedMonth, 1);
+                    setMonthView();
+                    updateDiariesObservation();
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+
+        dialog.show();
     }
 
     @Override

@@ -28,19 +28,22 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:id="@+id/BottomAppBar"
             android:layout_gravity="bottom"
             app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp">
+            android:backgroundTint="@color/beige"
+            app:fabCradleRoundedCornerRadius="20dp">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/BottomAppBarNavigation"
+                app:itemIconTint="@color/white"
                 android:layout_marginEnd="20dp"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_menu"/>
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/bottom_menu"
+                android:background="@color/beige"/>
 
         </com.google.android.material.bottomappbar.BottomAppBar>
 
