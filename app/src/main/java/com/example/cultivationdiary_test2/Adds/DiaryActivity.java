@@ -1,13 +1,16 @@
-package com.example.cultivationdiary_test2;
+package com.example.cultivationdiary_test2.Adds;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.cultivationdiary_test2.Data.Database.Diary;
+import com.example.cultivationdiary_test2.Data.Database.Diary.Diary;
+import com.example.cultivationdiary_test2.ViewModel.DiaryViewModel;
+import com.example.cultivationdiary_test2.R;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -17,6 +20,7 @@ public class DiaryActivity extends AppCompatActivity {
     private DiaryViewModel diaryViewModel;
     private EditText thoughtsEditText;
     private String selectedDate;
+    private Diary currentDiary;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,7 @@ public class DiaryActivity extends AppCompatActivity {
         setContentView(R.layout.diary_layout);
 
         selectedDate = getIntent().getStringExtra("SELECTED_DATE");
+        Log.e("Diary", selectedDate);
         diaryViewModel = new ViewModelProvider(this).get(DiaryViewModel.class);
 
         TextView dateTextView = findViewById(R.id.DateDiary);
@@ -38,6 +43,8 @@ public class DiaryActivity extends AppCompatActivity {
         diaryViewModel.getDiaryByDate(selectedDate).observe(this, diary -> {
             if (diary != null) {
                 thoughtsEditText.setText(diary.getText());
+                currentDiary = diary;
+                Log.e("Diary", "isExistingEntry = true");
             }
         });
     }
@@ -45,12 +52,22 @@ public class DiaryActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        saveDiary();
+        saveOrUpdateDiary();
     }
 
-    private void saveDiary() {
+    private void saveOrUpdateDiary() {
         String text = thoughtsEditText.getText().toString().trim();
-        Diary diary = new Diary(text, selectedDate);
-        diaryViewModel.saveData(diary);
+
+        if (currentDiary != null) {
+            currentDiary.setText(text);
+            diaryViewModel.updateData(currentDiary);
+            Log.e("Diary", "Update");
+            Log.e("Diary", selectedDate);
+        } else {
+            Diary diary = new Diary(text, selectedDate);
+            diaryViewModel.saveData(diary);
+            Log.e("Diary", "Save");
+            Log.e("Diary", selectedDate);
+        }
     }
 }

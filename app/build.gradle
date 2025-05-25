@@ -33,6 +33,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_21
         targetCompatibility JavaVersion.VERSION_21
     }
+
+    buildFeatures{
+        //noinspection DataBindingWithoutKapt
+        dataBinding = true
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -41,10 +47,10 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
 
-    // Остальные зависимости
-    implementation libs.fab.options
-    implementation libs.support.design
+    // Add
     implementation libs.androidx.core.ktx
+
+    // Default
     implementation libs.androidx.appcompat
     implementation libs.material
     implementation libs.androidx.activity

@@ -42,11 +42,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         holder.DayLayout.setAlpha(day.getAlpha() + (float) 0.46);
         holder.itemView.setTag(day.getFullDate());
 
-        if (!day.getHasDiary()) {
-            holder.iconDiary.setVisibility(View.GONE);
-        }
-        else {
+        if (day.getHasDiary()) {
             holder.iconDiary.setVisibility(View.VISIBLE);
+        }
+        if (day.getHasEvent()) {
+            holder.iconEvent.setVisibility(View.VISIBLE);
         }
 
     }

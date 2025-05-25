@@ -6,16 +6,51 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {Diary.class}, version = 1)
-public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase instance;
-    public abstract DiaryDao diaryDao();
+import com.example.cultivationdiary_test2.Data.Database.Activity.Activity;
+import com.example.cultivationdiary_test2.Data.Database.Activity.ActivityDAO;
+import com.example.cultivationdiary_test2.Data.Database.Diary.Diary;
+import com.example.cultivationdiary_test2.Data.Database.Diary.DiaryDao;
+import com.example.cultivationdiary_test2.Data.Database.Event.Event;
+import com.example.cultivationdiary_test2.Data.Database.Event.EventDAO;
+import com.example.cultivationdiary_test2.Data.Database.Project.Project;
+import com.example.cultivationdiary_test2.Data.Database.Project.ProjectDAO;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderActivities;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderActivityDAO;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderEvents;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.ConnectionTable.ReminderEventsDAO;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.Reminders;
+import com.example.cultivationdiary_test2.Data.Database.Reminders.RemindersDAO;
+import com.example.cultivationdiary_test2.Data.Database.Task.Task;
+import com.example.cultivationdiary_test2.Data.Database.Task.TaskDAO;
 
-    public static synchronized AppDatabase getDatabase(Context context) {
-        if (instance == null) {
-            instance = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase.class, "Diary_database").build();
+@Database(entities = {Diary.class, Project.class, Task.class, Activity.class, Event.class,
+        Reminders.class, ReminderEvents.class, ReminderActivities.class}, version = 18)
+public abstract class AppDatabase extends RoomDatabase {
+    public abstract DiaryDao diaryDao();
+    public abstract ProjectDAO projectDAO();
+    public abstract TaskDAO taskDAO();
+    public abstract ActivityDAO activityDAO();
+    public abstract EventDAO eventDAO();
+    public abstract RemindersDAO remindersDAO();
+    public abstract ReminderEventsDAO reminderEventsDAO();
+    public abstract ReminderActivityDAO reminderActivityDAO();
+
+    private static volatile AppDatabase INSTANCE;
+
+    public static AppDatabase getInstance(Context context) {
+        if (INSTANCE == null) {
+            synchronized (AppDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(
+                            context.getApplicationContext(),
+                            AppDatabase.class,
+                            "app_database.db"
+                    )
+                            .fallbackToDestructiveMigration(true)
+                            .build();
+                }
+            }
         }
-        return instance;
+        return INSTANCE;
     }
 }

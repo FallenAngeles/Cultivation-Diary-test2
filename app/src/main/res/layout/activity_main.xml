@@ -5,61 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1f1f1f">
+    android:background="#1f1f1f"
+    tools:context=".MainActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp">
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/back"
-                android:textColor="@color/blue"
-                android:background="@null"
-                android:textStyle="bold"
-                android:onClick="previousMonthAction"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:id="@+id/monthYearTV"
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                android:text="Feb 2021"
-                android:textSize="20sp"
-                android:textAlignment="center"
-                android:textColor="@color/black"/>
-
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/forward"
-                android:textColor="@color/blue"
-                android:background="@null"
-                android:textStyle="bold"
-                android:onClick="nextMonthAction"
-                android:textSize="20sp"/>
-
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    </LinearLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        android:background="@color/beige"
+        app:title="Ciltivation Diary"
+        app:titleTextColor="@color/white"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -68,33 +28,23 @@
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:id="@+id/BottomAppBar"
             android:layout_gravity="bottom"
             app:fabCradleMargin="10dp"
-            app:fabCradleRoundedCornerRadius="50dp">
+            android:backgroundTint="@color/beige"
+            app:fabCradleRoundedCornerRadius="20dp">
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/BottomAppBarNavigation"
+                app:itemIconTint="@color/white"
                 android:layout_marginEnd="20dp"
-                app:labelVisibilityMode="labeled"
-                app:menu="@menu/bottom_menu">
-
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
+                app:labelVisibilityMode="unlabeled"
+                app:menu="@menu/bottom_menu"
+                android:background="@color/beige"/>
 
         </com.google.android.material.bottomappbar.BottomAppBar>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/white"
-        android:contentDescription="TODO"
-        android:src="@drawable/add"
-        android:tint="@color/blue"
-        app:layout_anchor="@+id/BottomAppBar"
-        app:layout_anchorGravity="left"
-        app:maxImageSize="40dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
